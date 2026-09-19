@@ -1,0 +1,151 @@
+void main() {
+  String name = "Bekzat";
+  int age = 25;
+  double gpa = 3.4;
+  bool isStudent = false;
+
+  print("name : $name\nage: $age y.o.\ngpa: $gpa\nis Teacher: ${!isStudent}");
+
+  String text1 = "Hello";
+  // String nullText = null; not works
+  String? text2 = null;
+  print('text1: $text1');
+  print('text2: $text2');
+
+  int length1 = text1.length;
+  int length2 = text2?.length ?? 0;
+  print(length1);
+  print(length2);
+
+  String confirmedText = text2 ?? "default";
+  print("confirmed $confirmedText length: ${confirmedText.length}");
+
+  int digit = 3;
+  print("MULTIPLICATION TABLE for digit $digit");
+  for (int i = 1; i <= 10; i++) {
+    print("$digit * $i = ${i * digit}");
+  }
+
+  for (int i = 10; i > 0; i--) {
+    if (i % 2 == 0) {
+      print("$i");
+    } else {
+      print("${i * 2}");
+    }
+  }
+
+  print("\n--- TASK 1 ---");
+  multiplicationTable();
+
+  print("\n--- TASK 2 ---");
+  print(nextDay("05.09.2026"));
+  print(nextDay("28.02.2024"));
+  print(nextDay("28.02.2026"));
+  print(nextDay("29.02.2026"));
+  print(nextDay("28.02.2100"));
+  print(nextDay("28.02.2000"));
+  print(nextDay("31.12.2025"));
+
+  print("\n--- TASK 3 ---");
+  print(countVowels("flutter mobile development"));
+
+  print("\n--- TASK 4 ---");
+  findMinMax(numbers);
+  findMinMax(numbers1);
+
+  print("\n--- TASK 5 ---");
+  printPrime(3);
+  printPrime(6);
+}
+
+// TASK 1
+// OUTPUT MULTIPLICATION TABLE  1-10
+void multiplicationTable() {
+  for (int digit = 1; digit <= 10; digit++) {
+    print("Table for $digit");
+    for (int i = 1; i <= 10; i++) {
+      print("$digit * $i = ${digit * i}");
+    }
+  }
+}
+
+// TASK 2
+// next day
+bool isLeap(int year) {
+  return (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0);
+}
+
+int daysInMonth(int month, int year) {
+  if (month == 2) return isLeap(year) ? 29 : 28;
+  if (month == 4 || month == 6 || month == 9 || month == 11) return 30;
+  return 31;
+}
+
+String nextDay(String date) {
+  List<String> parts = date.split('.');
+  int day = int.parse(parts[0]);
+  int month = int.parse(parts[1]);
+  int year = int.parse(parts[2]);
+
+  if (month < 1 || month > 12 || day < 1 || day > daysInMonth(month, year)) {
+    return "invalid date";
+  }
+
+  day++;
+  if (day > daysInMonth(month, year)) {
+    day = 1;
+    month++;
+    if (month > 12) {
+      month = 1;
+      year++;
+    }
+  }
+
+  String d = day.toString().padLeft(2, '0');
+  String m = month.toString().padLeft(2, '0');
+  return "$d.$m.$year";
+}
+
+// TASK3
+// Vowel Counter in a String
+int countVowels(String text) {
+  String vowels = "aeiou";
+  int count = 0;
+  for (int i = 0; i < text.length; i++) {
+    if (vowels.contains(text[i].toLowerCase())) {
+      count++;
+    }
+  }
+  return count;
+}
+
+List<int> numbers = [14, 88, 3, 42, 99, 12, 67]; //-> max: 99, min: 3
+List<int> numbers1 = [234, 34, 123, 44, 949, 112, 67]; //-> max: 949, min: 34
+int first = numbers[0];
+int last = numbers[numbers.length - 1];
+
+// TASK4
+// Manual min & max finder
+void findMinMax(List<int> list) {
+  int min = list[0];
+  int max = list[0];
+  for (int i = 1; i < list.length; i++) {
+    if (list[i] > max) max = list[i];
+    if (list[i] < min) min = list[i];
+  }
+  print("max: $max, min: $min");
+}
+
+// TASK 5
+// Prime Number Checker
+bool isPrime(int n) {
+  if (n < 2) return false;
+  for (int i = 2; i * i <= n; i++) {
+    if (n % i == 0) return false;
+  }
+  return true;
+}
+
+void printPrime(int n) {
+  print(isPrime(n) ? "$n -> prime number" : "$n -> not prime number");
+}
