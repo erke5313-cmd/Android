@@ -1,0 +1,45 @@
+double processOrder({
+  required int orderId,
+  required double itemPrice,
+  String? promoCode,
+  double? deliveryFee,
+}) {
+  
+  double discount = 0;
+  if (promoCode == 'SAVE10') {
+    discount = itemPrice * 0.10;
+  }
+
+  double fee = deliveryFee ?? 500.0;
+
+  double total = itemPrice - discount + fee;
+
+  print("----- Order #$orderId -----");
+  print("Item price: $itemPrice ₸");
+  print("Promo code: ${promoCode ?? 'none'}");
+  print("Discount: $discount ₸");
+  print("Delivery fee: $fee ₸");
+  print("TOTAL: $total ₸");
+  print("");
+
+  return total;
+}
+
+void main() {
+  
+  double t1 = processOrder(
+    orderId: 1,
+    itemPrice: 10000.0,
+    promoCode: 'SAVE10',
+  );
+
+  double t2 = processOrder(
+    orderId: 2,
+    itemPrice: 5000.0,
+    deliveryFee: 300.0,
+  );
+
+  processOrder(orderId: 3, itemPrice: 20000.0, promoCode: 'HELLO');
+
+  print("Returned totals: $t1 and $t2");
+}
